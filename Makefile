@@ -9,14 +9,14 @@ show-logs:
 
 show-logs-api:
 	docker compose -f local.yml logs api
-makemigration:
-	docker compose f local.yml run --rm api python manage.py makemigrations
+makemigrations:
+	docker compose -f local.yml run --rm api python manage.py makemigrations
 migrate:
 	docker compose -f local.yml run --rm api python manage.py migrate
 collectstatic:
 	docker compose -f local.yml run --rm api python manage.py collectstatic --no-input --clear 
 superuser:
-	docker compose -f local.yml run --rm api python manage.py createsuperuser
+	winpty docker compose -f local.yml run --rm api python manage.py createsuperuser
 down-v:
 	docker compose -f local.yml down -v
 
@@ -45,3 +45,5 @@ isort-diff:
 isort:
 	docker compose -f local.yml exec api isort . --skip venv --skip migrations
 
+connect: 
+	winpty docker exec -it src-postgres-1 psql -U alphaogilo -d authors-live
